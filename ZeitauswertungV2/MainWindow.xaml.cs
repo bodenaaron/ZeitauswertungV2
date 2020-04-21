@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ZeitauswertungV2.UI.ViewModel;
 
 namespace ZeitauswertungV2
 {
@@ -20,14 +21,19 @@ namespace ZeitauswertungV2
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private MainViewModel viewModel;
+
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
+            this.viewModel = viewModel;
+            DataContext = this.viewModel;
+            Loaded += MainWindow_Loaded;
         }
-
-        private void tb_MandatoryHoursInRange_TextChanged(object sender, TextChangedEventArgs e)
+        
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-
+            await viewModel.LoadAsync();
         }
     }
 }

@@ -9,7 +9,7 @@ using ZeitauswertungV2.UI.Data;
 
 namespace ZeitauswertungV2.UI.ViewModel
 {
-    class MainViewModel:ViewModelBase
+    public class MainViewModel:ViewModelBase
     {
         private Employee selectedEmployee;
 
@@ -19,6 +19,7 @@ namespace ZeitauswertungV2.UI.ViewModel
 
         public MainViewModel(IEmployeeDataService employeeDataService)
         {
+            Employees = new ObservableCollection<Employee>();
             this.employeeDataService = employeeDataService;
         }
 

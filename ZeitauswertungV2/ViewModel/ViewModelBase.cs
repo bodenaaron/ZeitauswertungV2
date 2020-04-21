@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZeitauswertungV2.UI.ViewModel
 {
-    class ViewModelBase
+    public class ViewModelBase
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
