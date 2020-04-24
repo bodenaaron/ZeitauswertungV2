@@ -32,7 +32,7 @@
         <DatePicker Grid.Column="4" />
         <Label Grid.Column="5" Content="Bis" HorizontalAlignment="Right"/>
         <DatePicker Grid.Column="6"/>
-        <Button Grid.Column="7" Name="btn_search" Content="Suchen" Margin="20 0 0 0"/>
+        <Button Grid.Column="7" Name="btn_search" Content="Suchen" Margin="20 0 0 0" Command="{Binding SearchCommand}"/>
         
         
         <Label Grid.Column="0" Grid.Row="1" Content="Soll Arbeitsstunden:" HorizontalAlignment="Left" />
@@ -50,7 +50,7 @@
         <Label Grid.Column="6" Grid.Row="2" Content="Krank gebucht: " HorizontalAlignment="Left" />
         <TextBox Grid.Column="7"  Grid.Row="2" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
 
-        <DataGrid Grid.Row="3" Grid.ColumnSpan="8"/>
+        <DataGrid Grid.Row="3" Grid.ColumnSpan="8" ItemsSource="{Binding SelectedEmployee.Bookings}"/>
 
 
     </Grid>

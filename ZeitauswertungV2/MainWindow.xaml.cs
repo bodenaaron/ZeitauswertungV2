@@ -33,7 +33,7 @@ namespace ZeitauswertungV2
         
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await viewModel.LoadAsync();
+            await viewModel.LoadAsyncEmployee();
         }
     }
 }

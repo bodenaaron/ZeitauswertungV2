@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,6 +20,8 @@ namespace ZeitauswertungV2.Model
         [Column("Bearbeiter_Vorname")]
         public string FirstName { get; set; }
         [Column("SollStunden")]
-        public Single MandatoryHours { get; set; }        
+        public Single MandatoryHours { get; set; }
+        [NotMapped]
+        public List<Booking> Bookings { get; set; }
     }
 }

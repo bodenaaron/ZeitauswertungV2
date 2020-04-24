@@ -22,7 +22,7 @@ namespace ZeitauswertungV2.UI.Data
         {
             using (var ctx = contextCreator())
             {
-                return await ctx.Employees.AsNoTracking().ToListAsync();
+                return await ctx.Employees.AsNoTracking().Where(e => e.FirstName !=null).ToListAsync();
             }            
         }
     }

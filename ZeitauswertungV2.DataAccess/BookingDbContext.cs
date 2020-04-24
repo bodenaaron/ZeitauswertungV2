@@ -15,6 +15,8 @@ namespace ZeitauswertungV2.DataAccess
 
         public DbSet<Employee> Employees{ get; set; }
 
+        public DbSet<Booking> Bookings { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
