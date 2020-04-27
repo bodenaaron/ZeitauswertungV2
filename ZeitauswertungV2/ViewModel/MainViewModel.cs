@@ -17,12 +17,6 @@ namespace ZeitauswertungV2.UI.ViewModel
 {
     public class MainViewModel:ViewModelBase
     {
-
-
-        
-
-        
-
         public MainViewModel(IInputBarViewModel inputBarViewModel, IDataTableViewModel dataTableViewModel)
         {
             InputBarViewModel = inputBarViewModel;

@@ -88,6 +88,8 @@
     <Compile Include="Data\EmployeeDataService.cs" />
     <Compile Include="Data\IBookingDataService.cs" />
     <Compile Include="Data\IEmployeeDataService.cs" />
+    <Compile Include="Event\DateChangedEvent.cs" />
+    <Compile Include="Event\DateChangedEventArgs.cs" />
     <Compile Include="Event\EmployeeChangedEvent.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="Test.cs" />

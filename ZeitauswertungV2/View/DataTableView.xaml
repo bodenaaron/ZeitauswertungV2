@@ -7,6 +7,54 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid Grid.Row="3" Grid.ColumnSpan="8" ItemsSource="{Binding SelectedEmployee.Bookings}"/>
+        <!--<DataGrid Grid.Row="3" Grid.ColumnSpan="8" ItemsSource="{Binding Bookings}"/>-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Grid.Column="0" Grid.Row="0" Content="Soll Arbeitsstunden:" HorizontalAlignment="Left" />
+        <TextBox Text="{Binding TargetHours.TotalHours,Mode=OneWay}" Grid.Column="1" Grid.Row="0" Name="tb_MandatoryHoursInRange" HorizontalAlignment="Left" MinWidth="50" Width="Auto" />
+
+        <Label Grid.Column="0" Grid.Row="1" Content="Gesamtstunden: " HorizontalAlignment="Left" />
+        <TextBox Text="{Binding AllHours}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
+
+        <Label Grid.Column="2" Grid.Row="1" Content="Gearbeitete Stunden: " HorizontalAlignment="Left"/>
+        <TextBox Grid.Column="3" Grid.Row="1" Name="tb_WorkedHoures" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding WorkedHours}"/>
+
+        <Label Grid.Column="4" Grid.Row="1" Content="Urlaub gebucht: " HorizontalAlignment="Left" />
+        <TextBox Grid.Column="5" Grid.Row="1" Name="tb_HolidayHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding VacationHours,Mode=OneWay}"/>
+
+        <Label Grid.Column="6" Grid.Row="1" Content="Krank gebucht: " HorizontalAlignment="Left" />
+        <TextBox Grid.Column="7"  Grid.Row="1" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding SickHours, Mode=OneWay}"/>
+        
+        
+        <DataGrid Name="myDataGrid" ItemsSource="{Binding Bookings}" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Employee}" Header="Bearbeiter" />
+                <DataGridTextColumn Binding="{Binding Assignment}" Header="Auftrag" />
+                <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Header="Datum" />
+                <DataGridTextColumn Binding="{Binding Comment}" Header="Bemerkung" />
+                <DataGridTextColumn Binding="{Binding BookingFrom, StringFormat=\{0:HH:mm\}}" Header="Von" />
+                <DataGridTextColumn Binding="{Binding BookingTill, StringFormat=\{0:HH:mm\}}" Header="Bis" />
+                <DataGridTextColumn Binding="{Binding Duration, StringFormat=\{0:hh\\:mm\}}" Header="Dauer" />
+                
+                <DataGridTextColumn Binding="{Binding BookingTyp}" Header="Art der Buchung" />
+                
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

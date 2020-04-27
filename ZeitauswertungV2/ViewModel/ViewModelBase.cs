@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace ZeitauswertungV2.UI.ViewModel
 {
-    public class ViewModelBase
+    public class ViewModelBase: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

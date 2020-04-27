@@ -21,7 +21,5 @@ namespace ZeitauswertungV2.Model
         public string FirstName { get; set; }
         [Column("SollStunden")]
         public Single MandatoryHours { get; set; }
-        [NotMapped]
-        public List<Booking> Bookings { get; set; }
     }
 }

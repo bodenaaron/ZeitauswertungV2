@@ -27,9 +27,10 @@ namespace ZeitauswertungV2.ViewModel
         {
             Employees = new ObservableCollection<Employee>();
             this.employeeDataService = employeeDataService;
-            this.eventAggregator = eventAggregator;
-            
+            this.eventAggregator = eventAggregator;            
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
+            FromDate = DateTime.Now;
+            TillDate = DateTime.Now;
         }
         public async Task LoadAsyncEmployee()
         {
@@ -41,7 +42,34 @@ namespace ZeitauswertungV2.ViewModel
             }
         }
 
-        
+        private DateTime fromDate;
+        public DateTime FromDate {
+            get { return fromDate; }
+            set
+            {
+                fromDate = value;
+                OnPropertyChanged();
+                if (fromDate!=null)
+                {
+                    eventAggregator.GetEvent<DateChangedEvent>().Publish(new DateChangedEventArgs { EmployeeId = selectedEmployee?.Id, From = fromDate, Till=tillDate});
+                }
+            }
+        }
+
+        private DateTime tillDate;
+        public DateTime TillDate
+        {
+            get { return tillDate; }
+            set
+            {
+                tillDate = value;
+                OnPropertyChanged();
+                if (tillDate != null)
+                {
+                    eventAggregator.GetEvent<DateChangedEvent>().Publish(new DateChangedEventArgs {EmployeeId=selectedEmployee?.Id, From = fromDate, Till = tillDate });
+                }
+            }
+        }
 
         public Employee SelectedEmployee
         {
@@ -59,7 +87,7 @@ namespace ZeitauswertungV2.ViewModel
 
         private void OnSearchExecute()
         {
-            throw new NotImplementedException();
+            
         }
 
         private bool OnSearchCanExecute()

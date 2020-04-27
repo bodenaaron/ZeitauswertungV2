@@ -18,6 +18,7 @@ namespace ZeitauswertungV2
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+
         }
     }
 }

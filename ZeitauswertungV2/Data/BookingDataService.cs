@@ -31,7 +31,19 @@ namespace ZeitauswertungV2.Data
         {
             using (var ctx = contextCreator())
             {
-                return await ctx.Bookings.AsNoTracking().Where(b=>b.Employee.Id ==employeeId).ToListAsync();               
+                return await ctx.Bookings.AsNoTracking().Where(b=>b.Employee ==employeeId).OrderByDescending(b => b.Date).ToListAsync();               
+            }
+        }
+
+        public async Task<List<Booking>> GetByEmployeeIdAndDateAsync(string employeeId, DateTime from, DateTime till )
+        {
+            if (till < from)
+            {
+                till = DateTime.Now;
+            }
+            using (var ctx = contextCreator())
+            {
+                return await ctx.Bookings.AsNoTracking().Where(b => b.Employee == employeeId).Where(b=>b.Date>=from&&b.Date<=till).OrderByDescending(b=>b.Date).ToListAsync();
             }
         }
     }

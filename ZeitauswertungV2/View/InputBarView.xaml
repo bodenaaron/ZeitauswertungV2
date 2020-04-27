@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZeitauswertungV2.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             d:Class="ZeitauswertungV2.ViewModel.InputBarViewModel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,26 +29,13 @@
         <Label Grid.Column="0" Grid.ColumnSpan="1" Content="Bearbeiter" HorizontalAlignment="Left" />
         <ComboBox Grid.Column="1" Grid.ColumnSpan="2" Name="cmb_Employee" Padding="20 0 0 0" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}" DisplayMemberPath="FirstName"/>
         <Label Grid.Column="3" Content="Von" HorizontalAlignment="Right"/>
-        <DatePicker Grid.Column="4" />
+        <DatePicker Grid.Column="4" SelectedDate="{Binding FromDate, Mode=OneWayToSource}" d:Name="DatePickerFrom"/>
         <Label Grid.Column="5" Content="Bis" HorizontalAlignment="Right"/>
-        <DatePicker Grid.Column="6"/>
-        <Button Grid.Column="7" Name="btn_search" Content="Suchen" Margin="20 0 0 0" Command="{Binding SearchCommand}"/>
+        <DatePicker Grid.Column="6" SelectedDate="{Binding TillDate, Mode=OneWayToSource}" d:Name="DatePickerTill"/>
+        <!--<Button Grid.Column="7" Name="btn_search" Content="Suchen" Margin="20 0 0 0" Command="{Binding SearchCommand}"/>-->
 
 
-        <Label Grid.Column="0" Grid.Row="1" Content="Soll Arbeitsstunden:" HorizontalAlignment="Left" />
-        <TextBox Grid.Column="1" Grid.Row="1" Name="tb_MandatoryHoursInRange" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
 
-        <Label Grid.Column="0" Grid.Row="2" Content="Gesamtstunden: " HorizontalAlignment="Left" />
-        <TextBox Grid.Column="1" Grid.Row="2" Name="tb_BookedHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
-
-        <Label Grid.Column="2" Grid.Row="2" Content="Gearbeitete Stunden: " HorizontalAlignment="Left"/>
-        <TextBox Grid.Column="3" Grid.Row="2" Name="tb_WorkedHoures" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
-
-        <Label Grid.Column="4" Grid.Row="2" Content="Urlaub gebucht: " HorizontalAlignment="Left" />
-        <TextBox Grid.Column="5" Grid.Row="2" Name="tb_HolidayHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
-
-        <Label Grid.Column="6" Grid.Row="2" Content="Krank gebucht: " HorizontalAlignment="Left" />
-        <TextBox Grid.Column="7"  Grid.Row="2" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
 
     </Grid>
 </UserControl>
