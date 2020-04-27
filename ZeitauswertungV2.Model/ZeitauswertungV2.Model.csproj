@@ -59,6 +59,7 @@
     <Compile Include="Booking.cs" />
     <Compile Include="BookingTyp.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="Holiday.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

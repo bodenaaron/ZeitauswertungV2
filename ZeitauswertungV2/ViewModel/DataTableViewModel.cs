@@ -12,6 +12,7 @@ using ZeitauswertungV2.Data;
 using ZeitauswertungV2.Event;
 using ZeitauswertungV2.Model;
 using ZeitauswertungV2.UI.ViewModel;
+using ZeitauswertungV2.Utility;
 
 namespace ZeitauswertungV2.ViewModel
 {
@@ -105,14 +106,25 @@ namespace ZeitauswertungV2.ViewModel
 
         private void calculateTargetHours(DateChangedEventArgs dateChangedEventArgs)
         {
+            DateChecker dc = new DateChecker();
             TargetHours = TimeSpan.Zero;
             TimeSpan duration = dateChangedEventArgs.Till - dateChangedEventArgs.From;
 
-            for (int i=0;i<=duration.Days;i++)
+            foreach (var day in EachDay(dateChangedEventArgs.From, dateChangedEventArgs.Till))
             {
-                TargetHours = TargetHours.Add(TimeSpan.FromHours(8));
+                if (dc.IsWorkday(day))
+                {
+                    TargetHours = TargetHours.Add(TimeSpan.FromHours(8));
+                }
+                
             }
             
+        }
+
+        private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
         }
         private void calculateHours()
         {

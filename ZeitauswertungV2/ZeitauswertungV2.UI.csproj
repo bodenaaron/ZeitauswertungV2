@@ -50,6 +50,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Nager.Date, Version=1.25.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nager.Date.1.25.10\lib\net461\Nager.Date.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -93,6 +96,7 @@
     <Compile Include="Event\EmployeeChangedEvent.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="Utility\DateChecker.cs" />
     <Compile Include="ViewModel\DataTableViewModel.cs" />
     <Compile Include="ViewModel\IDataTableViewModel.cs" />
     <Compile Include="ViewModel\IInputBarViewModel.cs" />
