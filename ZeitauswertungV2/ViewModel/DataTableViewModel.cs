@@ -23,53 +23,140 @@ namespace ZeitauswertungV2.ViewModel
         private IEventAggregator eventAggregator;
 
         public ObservableCollection<Booking> Bookings { get; }
-        public TimeSpan AllHours {
-            get { return allHours; }
-            set
+
+        private TimeSpan targetHours;
+
+        #region Überwachte Variablen
+        public string DisplayAllHours {
+            get
             {
-                allHours = value;
-                OnPropertyChanged();      
+                return displayAllHours;
             }
-        }
-        private TimeSpan allHours;
-        public TimeSpan WorkedHours {
-            get { return workedHours; }
             set
             {
-                workedHours = value;
+                displayAllHours = value;
                 OnPropertyChanged();
             }
         }
-        private TimeSpan workedHours;
-        public TimeSpan VacationHours {
-            get { return vacationHours; }
+        private string displayAllHours;
+        public string DisplayWorkedHours {
+            get
+            {
+                return displayWorkedHours;
+            }
             set
             {
-                vacationHours = value;
+                displayWorkedHours = value;
                 OnPropertyChanged();
             }
         }
+        private string displayWorkedHours;
         private TimeSpan vacationHours;
-        public TimeSpan SickHours {
-            get { return sickHours; }
+
+        public string DisplayVacationHours
+        {
+            get
+            {
+                return displayVacationHours;
+            }
             set
             {
-                sickHours = value;
+                displayVacationHours = value;
                 OnPropertyChanged();
             }
         }
+        private string displayVacationHours;
         private TimeSpan sickHours;
 
-        public TimeSpan TargetHours
+        public string DisplaySickHours
         {
-            get { return targetHours; }
+            get
+            {
+                return displaySickHours;
+            }
             set
             {
-                targetHours = value;
+                displaySickHours = value;
                 OnPropertyChanged();
             }
         }
-        private TimeSpan targetHours;
+        public string DisplayTargetHours
+        {
+            get
+            {
+                return displayTargetHours;
+            }
+            set
+            {
+                displayTargetHours = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan TargetHours {
+            get
+            {
+                return targetHours;
+            }
+            private set
+            {
+                targetHours = value;
+                DisplayTargetHours = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+            }
+        }
+        public TimeSpan VacationHours {
+            get
+            {
+                return vacationHours;
+            }
+            private set
+            {
+                vacationHours = value;
+                DisplayVacationHours = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+            }
+        }
+        public TimeSpan SickHours {
+            get
+            {
+                return sickHours;
+            }
+            private set
+            {
+                sickHours = value;
+                DisplaySickHours = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+            }
+        }
+        public TimeSpan WorkedHours {
+            get
+            {
+                return workedHours;
+            }
+            private set
+            {
+                workedHours = value;
+                DisplayWorkedHours = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+            }
+        }
+
+        private TimeSpan allHours;
+        public TimeSpan AllHours {
+            get
+            {
+                return allHours;
+            }
+            private set
+            {
+                allHours = value;
+                DisplayAllHours = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);                
+            }
+        }
+
+        private string displaySickHours;
+        private string displayTargetHours;
+        private TimeSpan workedHours;
+
+        #endregion
+
 
         public DataTableViewModel(IBookingDataService bookingDataService, IEventAggregator eventAggregator)
         {
@@ -131,7 +218,7 @@ namespace ZeitauswertungV2.ViewModel
             VacationHours = TimeSpan.Zero;
             SickHours = TimeSpan.Zero;
             WorkedHours = TimeSpan.Zero;
-            AllHours = TimeSpan.Zero;
+            AllHours= TimeSpan.Zero;
             foreach (var booking in Bookings)
             {
 
@@ -140,7 +227,7 @@ namespace ZeitauswertungV2.ViewModel
                 {
                     case "Urlaub"://todo: Den Eigentlichen Zeittypen benutzen
                         VacationHours = VacationHours + TimeSpan.Parse("8:00"); //die Im Bearbeiter hinterlegten Pflichtstunden benutzen
-                        AllHours = AllHours + TimeSpan.Parse("8:00");
+                        AllHours= AllHours + TimeSpan.Parse("8:00");
                         break;
                     case "Krank":
                         SickHours = SickHours + TimeSpan.Parse("8:00");
