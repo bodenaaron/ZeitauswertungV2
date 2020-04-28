@@ -91,9 +91,8 @@
     <Compile Include="Data\EmployeeDataService.cs" />
     <Compile Include="Data\IBookingDataService.cs" />
     <Compile Include="Data\IEmployeeDataService.cs" />
-    <Compile Include="Event\DateChangedEvent.cs" />
-    <Compile Include="Event\DateChangedEventArgs.cs" />
-    <Compile Include="Event\EmployeeChangedEvent.cs" />
+    <Compile Include="Event\InputChangedEvent.cs" />
+    <Compile Include="Event\InputChangedEventArgs.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Utility\DateChecker.cs" />
@@ -108,6 +107,9 @@
     </Compile>
     <Compile Include="View\InputBarView.xaml.cs">
       <DependentUpon>InputBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LeftInputList.xaml.cs">
+      <DependentUpon>LeftInputList.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InputBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LeftInputList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,11 +22,15 @@ namespace ZeitauswertungV2.ViewModel
         private IBookingDataService bookingDataService;
         private IEventAggregator eventAggregator;
 
+        public ObservableCollection<BookingDay> BookingsByDay { get; }
         public ObservableCollection<Booking> Bookings { get; }
 
         private TimeSpan targetHours;
 
         #region Überwachte Variablen
+
+        public bool GroupByDay { get; set;}
+        public bool GroupByBooking { get; set; }
         public string DisplayAllHours {
             get
             {
@@ -162,9 +166,11 @@ namespace ZeitauswertungV2.ViewModel
         {
             this.bookingDataService = bookingDataService;
             this.eventAggregator = eventAggregator;
-            this.eventAggregator.GetEvent<EmployeeChangedEvent>().Subscribe(OnEmployeeChanged);
-            this.eventAggregator.GetEvent<DateChangedEvent>().Subscribe(OnDateChanged);
+            //this.eventAggregator.GetEvent<EmployeeChangedEvent>().Subscribe(OnEmployeeChanged);
+            this.eventAggregator.GetEvent<InputChangedEvent>().Subscribe(OnInputChanged);
             Bookings = new ObservableCollection<Booking>();
+            BookingsByDay = new ObservableCollection<BookingDay>();
+            
             
         }
 
@@ -183,15 +189,16 @@ namespace ZeitauswertungV2.ViewModel
             }
         }
 
-        public async void OnDateChanged(DateChangedEventArgs dateChangedEventArgs)
+        public async void OnInputChanged(InputChangedEventArgs dateChangedEventArgs)
         {
             await LoadAsyncBookingsBeetweenDate(dateChangedEventArgs.EmployeeId,dateChangedEventArgs.From,dateChangedEventArgs.Till);
+            await LoadBookingsByDayAsync(dateChangedEventArgs.EmployeeId, dateChangedEventArgs.From, dateChangedEventArgs.Till);
             calculateHours();
             calculateTargetHours(dateChangedEventArgs);
 
         }
 
-        private void calculateTargetHours(DateChangedEventArgs dateChangedEventArgs)
+        private void calculateTargetHours(InputChangedEventArgs dateChangedEventArgs)
         {
             DateChecker dc = new DateChecker();
             TargetHours = TimeSpan.Zero;
@@ -248,6 +255,26 @@ namespace ZeitauswertungV2.ViewModel
             foreach (var item in bookings)
             {
                 Bookings.Add(item);
+            }
+        }
+
+        public async Task LoadBookingsByDayAsync(string employeeId, DateTime from, DateTime till)
+        {
+            DateTime date = from;
+
+
+            while (date<=till)
+            {            
+                var bookings = await bookingDataService.GetByEmployeeIdAndDateAsync(employeeId, date, date);
+                BookingsByDay.Clear();
+                BookingDay bd = new BookingDay();
+                foreach (var item in bookings)
+                {               
+                    bd.Bookings.Add(item);                
+                }
+                bd.sumHours();
+                BookingsByDay.Add(bd);
+                date = date.AddDays(1);
             }
         }
 

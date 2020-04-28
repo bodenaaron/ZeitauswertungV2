@@ -15,8 +15,8 @@
         </Grid.RowDefinitions>
 
         <view:InputBarView DataContext="{Binding InputBarViewModel}"/>
-        <view:DataTableView Grid.Row="1" DataContext="{Binding DataTableViewModel}"/>
-
-
+        
+        
+        <view:DataTableView Grid.Row="1" Grid.Column="1" DataContext="{Binding DataTableViewModel}"/>
     </Grid>
 </Window>

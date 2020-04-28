@@ -48,11 +48,14 @@ namespace ZeitauswertungV2.ViewModel
             set
             {
                 fromDate = value;
+                TillDate = fromDate;
                 OnPropertyChanged();
                 if (fromDate!=null)
                 {
-                    eventAggregator.GetEvent<DateChangedEvent>().Publish(new DateChangedEventArgs { EmployeeId = selectedEmployee?.Id, From = fromDate, Till=tillDate});
+                    eventAggregator.GetEvent<InputChangedEvent>().Publish(new InputChangedEventArgs { EmployeeId = selectedEmployee?.Id, From = fromDate, Till=tillDate});
                 }
+
+                
             }
         }
 
@@ -66,7 +69,7 @@ namespace ZeitauswertungV2.ViewModel
                 OnPropertyChanged();
                 if (tillDate != null)
                 {
-                    eventAggregator.GetEvent<DateChangedEvent>().Publish(new DateChangedEventArgs {EmployeeId=selectedEmployee?.Id, From = fromDate, Till = tillDate });
+                    eventAggregator.GetEvent<InputChangedEvent>().Publish(new InputChangedEventArgs {EmployeeId=selectedEmployee?.Id, From = fromDate, Till = tillDate });
                 }
             }
         }
@@ -80,8 +83,8 @@ namespace ZeitauswertungV2.ViewModel
                 OnPropertyChanged();
                 if (selectedEmployee != null)
                 {
-                    eventAggregator.GetEvent<EmployeeChangedEvent>().Publish(selectedEmployee.Id);
-                }
+                    eventAggregator.GetEvent<InputChangedEvent>().Publish(new InputChangedEventArgs { EmployeeId = selectedEmployee?.Id, From = fromDate, Till = tillDate });
+                }                                
             }
         }
 

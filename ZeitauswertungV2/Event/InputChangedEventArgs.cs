@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZeitauswertungV2.Event
 {
-    class DateChangedEventArgs
+    class InputChangedEventArgs
     {
         public string EmployeeId { get; set; }
         public DateTime From { get; set; }

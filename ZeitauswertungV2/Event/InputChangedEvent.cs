@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace ZeitauswertungV2.Event
 {
-    class EmployeeChangedEvent:PubSubEvent<string>
+    class InputChangedEvent:PubSubEvent<InputChangedEventArgs>
     {
+
     }
 }

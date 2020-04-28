@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Assignment.cs" />
     <Compile Include="Booking.cs" />
+    <Compile Include="BookingDay.cs" />
     <Compile Include="BookingTyp.cs" />
     <Compile Include="CustomTimeSpan.cs" />
     <Compile Include="Employee.cs" />

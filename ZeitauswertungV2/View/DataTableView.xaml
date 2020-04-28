@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ZeitauswertungV2.View"
              mc:Ignorable="d" 
+             xmlns:view="clr-namespace:ZeitauswertungV2.View"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid >
         <!--<DataGrid Grid.Row="3" Grid.ColumnSpan="8" ItemsSource="{Binding Bookings}"/>-->
 
         <Grid.RowDefinitions>
@@ -27,22 +28,26 @@
         </Grid.ColumnDefinitions>
         
         <Label Grid.Column="0" Grid.Row="0" Content="Soll Arbeitsstunden:" HorizontalAlignment="Left" />
-        <TextBox Text="{Binding DisplayTargetHours,Mode=OneWay}" Grid.Column="1" Grid.Row="0" Name="tb_MandatoryHoursInRange" HorizontalAlignment="Left" MinWidth="50" Width="Auto" />
+        <TextBox IsReadOnly="True"  Text="{Binding DisplayTargetHours,Mode=OneWay}" Grid.Column="1" Grid.Row="0" Name="tb_MandatoryHoursInRange" HorizontalAlignment="Left" MinWidth="50" Width="Auto" />
 
         <Label Grid.Column="0" Grid.Row="1" Content="Gesamtstunden: " HorizontalAlignment="Left" />
-        <TextBox Text="{Binding DisplayAllHours,Mode=OneWay}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
+        <TextBox IsReadOnly="True"  Text="{Binding DisplayAllHours,Mode=OneWay}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
 
         <Label Grid.Column="2" Grid.Row="1" Content="Gearbeitete Stunden: " HorizontalAlignment="Left"/>
-        <TextBox Grid.Column="3" Grid.Row="1" Name="tb_WorkedHoures" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayWorkedHours,StringFormat=\{0:hh\\:mm\},Mode=OneWay}"/>
+        <TextBox IsReadOnly="True"  Grid.Column="3" Grid.Row="1" Name="tb_WorkedHoures" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayWorkedHours,StringFormat=\{0:hh\\:mm\},Mode=OneWay}"/>
 
         <Label Grid.Column="4" Grid.Row="1" Content="Urlaub gebucht: " HorizontalAlignment="Left" />
-        <TextBox Grid.Column="5" Grid.Row="1" Name="tb_HolidayHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayVacationHours,Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
+        <TextBox IsReadOnly="True"  Grid.Column="5" Grid.Row="1" Name="tb_HolidayHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayVacationHours,Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
 
         <Label Grid.Column="6" Grid.Row="1" Content="Krank gebucht: " HorizontalAlignment="Left" />
-        <TextBox Grid.Column="7"  Grid.Row="1" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplaySickHours, Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
+        <TextBox IsReadOnly="True"  Grid.Column="7"  Grid.Row="1" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplaySickHours, Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
+
+
+        <Border Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="0 25 10 0">
+            <view:LeftInputList DataContext="{Binding DataTableViewModel}"/>
+        </Border>
         
-        
-        <DataGrid Name="myDataGrid" ItemsSource="{Binding Bookings}" AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="8">
+        <DataGrid Visibility="Visible" IsReadOnly="True"  Name="myDataGrid" ItemsSource="{Binding Bookings}" AutoGenerateColumns="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Employee}" Header="Bearbeiter" />
                 <DataGridTextColumn Binding="{Binding Assignment}" Header="Auftrag" />
@@ -54,6 +59,16 @@
                 
                 <DataGridTextColumn Binding="{Binding BookingTyp}" Header="Art der Buchung" />
                 
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Visibility="Visible" IsReadOnly="True"  Name="myDataGrid2" ItemsSource="{Binding BookingsByDay}" AutoGenerateColumns="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Header="Datum" />
+                <DataGridTextColumn Binding="{Binding BookedHours, StringFormat=\{0:hh\\:mm\}}" Header="Stunden Gebucht" />
+                <!--<DataGridTextColumn Binding="{Binding Employee, StringFormat=\{0:hh\\:mm\}}" Header="Bearbeiter" />-->
+                <DataGridTextColumn Binding="{Binding Bookings, StringFormat=\{0:hh\\:mm\}}" Header="Buchungen" />
+                
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
