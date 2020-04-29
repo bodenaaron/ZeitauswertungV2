@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             d:Class="ZeitauswertungV2.UI.ViewModel.DataTableViewModel">
+             d:Class="ZeitauswertungV2.UI.ViewModel.DataTableViewModel"
+             xmlns:view="clr-namespace:ZeitauswertungV2.UI.View">
     <Grid >
         <!--<DataGrid Grid.Row="3" Grid.ColumnSpan="8" ItemsSource="{Binding Bookings}"/>-->
 
@@ -43,10 +44,27 @@
         <Label Grid.Column="6" Grid.Row="1" Content="Krank gebucht: " HorizontalAlignment="Left" />
         <TextBox IsReadOnly="True"  Grid.Column="7"  Grid.Row="1" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplaySickHours, Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
 
-        <!--<Button Content="Ansicht Umschalten" Command="{Binding ToggleView}"/>
+        <!--<Button Content="Ansicht Umschalten" Command="{Binding ToggleView}"/>-->
         <Border Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="0 25 10 0">
-            <view:LeftInputList DataContext="{Binding DataTableViewModel}"/>
-        </Border>-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Content="Ansicht Umschalten" Command="{Binding ToggleView}"/>
+                <Label Grid.Row="1" Content="Urlaub Anzeigen" HorizontalAlignment="Left"/>
+                <CheckBox Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True"/>
+
+                <Label Grid.Row="2" Content="Krank Anzeigen" HorizontalAlignment="Left"/>
+                <CheckBox Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True"/>
+
+                <Label Grid.Row="3" Content="Arbeit Anzeigen" HorizontalAlignment="Left"/>
+                <CheckBox Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="True"/>
+            </Grid>
+        </Border>
         
         <DataGrid Visibility="Visible" IsReadOnly="True"  Name="myDataGrid" ItemsSource="{Binding Bookings}" AutoGenerateColumns="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7">
             <DataGrid.Columns>
@@ -63,14 +81,12 @@
                 
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Visibility="Visible" IsReadOnly="True"  Name="myDataGrid2" ItemsSource="{Binding BookingsByDay}" AutoGenerateColumns="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7">
+        <DataGrid Visibility="{Binding GroupByDay}" IsReadOnly="True"  Name="myDataGrid2" ItemsSource="{Binding BookingsByDay}" AutoGenerateColumns="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}" Header="Datum" />
                 <DataGridTextColumn Binding="{Binding BookedHours, StringFormat=\{0:hh\\:mm\}}" Header="Stunden Gebucht" />
-                <!--<DataGridTextColumn Binding="{Binding Employee, StringFormat=\{0:hh\\:mm\}}" Header="Bearbeiter" />-->
-                <DataGridTextColumn Binding="{Binding Bookings, StringFormat=\{0:hh\\:mm\}}" Header="Buchungen" />
-                
-
+                <!--<DataGridTextColumn Binding="{Binding Employee, StringFormat=\{0:hh\\:mm\}}" Header="Bearbeiter" />
+                <DataGridTextColumn  Binding="{Binding Bookings, StringFormat=\{0:hh\\:mm\}}" Header="Buchungen" />-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

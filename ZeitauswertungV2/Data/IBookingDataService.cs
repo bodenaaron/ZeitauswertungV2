@@ -9,6 +9,6 @@ namespace ZeitauswertungV2.UI.Data
     {
         Task<List<Booking>> GetAllAsync();
         Task<List<Booking>> GetByEmployeeIdAsync(string employeeId);
-        Task<List<Booking>> GetByEmployeeIdAndDateAsync(string employeeId, DateTime from, DateTime till);
+        List<Booking> GetByEmployeeIdAndDate(string employeeId, DateTime from, DateTime till);
     }
 }

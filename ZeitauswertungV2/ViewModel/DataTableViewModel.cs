@@ -206,14 +206,18 @@ namespace ZeitauswertungV2.UI.ViewModel
             Bookings.Clear();
             foreach (var item in bookings)
             {
-                Bookings.Add(item);
+                if (item.Deleted != true)
+                {
+                    Bookings.Add(item);
+                }
+                
             }
         }
 
-        public async void OnInputChanged(InputChangedEventArgs dateChangedEventArgs)
+        public void OnInputChanged(InputChangedEventArgs dateChangedEventArgs)
         {
-            await LoadAsyncBookingsBeetweenDate(dateChangedEventArgs.EmployeeId,dateChangedEventArgs.From,dateChangedEventArgs.Till);
-            await LoadBookingsByDayAsync(dateChangedEventArgs.EmployeeId, dateChangedEventArgs.From, dateChangedEventArgs.Till);
+            LoadAsyncBookingsBeetweenDate(dateChangedEventArgs.EmployeeId,dateChangedEventArgs.From,dateChangedEventArgs.Till);
+            LoadBookingsByDay(dateChangedEventArgs.EmployeeId, dateChangedEventArgs.From, dateChangedEventArgs.Till);
             calculateHours();
             calculateTargetHours(dateChangedEventArgs);
 
@@ -249,52 +253,64 @@ namespace ZeitauswertungV2.UI.ViewModel
             AllHours= TimeSpan.Zero;
             foreach (var booking in Bookings)
             {
-
-
-                switch (booking.BookingTyp)
+                if (booking.Deleted != true)
                 {
-                    case "Urlaub"://todo: Den Eigentlichen Zeittypen benutzen
-                        VacationHours = VacationHours + TimeSpan.Parse("8:00"); //die Im Bearbeiter hinterlegten Pflichtstunden benutzen
-                        AllHours= AllHours + TimeSpan.Parse("8:00");
-                        break;
-                    case "Krank":
-                        SickHours = SickHours + TimeSpan.Parse("8:00");
-                        AllHours = AllHours + TimeSpan.Parse("8:00");
-                        break;
-                    default:
-                        WorkedHours = WorkedHours + booking.Duration;
-                        AllHours = AllHours + booking.Duration;
-                        break;
+
+                    switch (booking.BookingTyp)
+                    {
+                        case "Urlaub"://todo: Den Eigentlichen Zeittypen benutzen
+                            VacationHours = VacationHours + TimeSpan.Parse("8:00"); //die Im Bearbeiter hinterlegten Pflichtstunden benutzen
+                            AllHours = AllHours + TimeSpan.Parse("8:00");
+                            break;
+                        case "Krank":
+                            SickHours = SickHours + TimeSpan.Parse("8:00");
+                            AllHours = AllHours + TimeSpan.Parse("8:00");
+                            break;
+                        default:
+                            WorkedHours = WorkedHours + booking.Duration;
+                            AllHours = AllHours + booking.Duration;
+                            break;
+                    }
                 }
             }
         }
 
-        public async Task LoadAsyncBookingsBeetweenDate(string employeeId, DateTime from, DateTime till)
+        public void LoadAsyncBookingsBeetweenDate(string employeeId, DateTime from, DateTime till)
         {
-            var bookings = await bookingDataService.GetByEmployeeIdAndDateAsync(employeeId,from, till);
+            var bookings =  bookingDataService.GetByEmployeeIdAndDate(employeeId,from, till);
             Bookings.Clear();
             foreach (var item in bookings)
             {
-                Bookings.Add(item);
+                if (item.Deleted != true)
+                {
+                    Bookings.Add(item);
+                }
             }
         }
 
-        public async Task LoadBookingsByDayAsync(string employeeId, DateTime from, DateTime till)
+        public void LoadBookingsByDay(string employeeId, DateTime from, DateTime till)
         {
             DateTime date = from;
             BookingsByDay.Clear();
 
             while (date<=till)
             {            
-                var bookings = await bookingDataService.GetByEmployeeIdAndDateAsync(employeeId, date, date);
+                var bookings = bookingDataService.GetByEmployeeIdAndDate(employeeId, date, date);
                 
                 BookingDay bd = new BookingDay();
                 foreach (var item in bookings)
-                {               
-                    bd.Bookings.Add(item);                
+                {
+                    if (item.Deleted!=true)
+                    {
+                        bd.Bookings.Add(item);
+                    }                                 
                 }
                 bd.sumHours();
-                BookingsByDay.Add(bd);
+                if (bd.BookedHours!=TimeSpan.Zero)
+                {
+                    BookingsByDay.Add(bd);
+                }
+                
                 date = date.AddDays(1);
             }
         }
