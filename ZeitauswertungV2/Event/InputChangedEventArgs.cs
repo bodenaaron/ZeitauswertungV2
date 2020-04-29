@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZeitauswertungV2.Event
+namespace ZeitauswertungV2.UI.Event
 {
-    class InputChangedEventArgs
+    public class InputChangedEventArgs
     {
         public string EmployeeId { get; set; }
         public DateTime From { get; set; }

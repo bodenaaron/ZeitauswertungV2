@@ -1,15 +1,8 @@
 ﻿using Autofac;
 using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeitauswertungV2.Data;
 using ZeitauswertungV2.DataAccess;
 using ZeitauswertungV2.UI.Data;
 using ZeitauswertungV2.UI.ViewModel;
-using ZeitauswertungV2.ViewModel;
 
 namespace ZeitauswertungV2.UI.Startup
 {

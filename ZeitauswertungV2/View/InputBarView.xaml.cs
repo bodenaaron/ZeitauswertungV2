@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZeitauswertungV2.View
+namespace ZeitauswertungV2.UI.View
 {
     /// <summary>
     /// Interaktionslogik für InputBarView.xaml

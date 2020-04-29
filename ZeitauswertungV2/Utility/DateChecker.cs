@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZeitauswertungV2.Model;
 
-namespace ZeitauswertungV2.Utility
+namespace ZeitauswertungV2.UI.Utility
 {
     class DateChecker
     {

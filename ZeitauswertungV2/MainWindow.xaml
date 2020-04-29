@@ -1,10 +1,10 @@
-﻿<Window x:Class="ZeitauswertungV2.MainWindow"
+﻿<Window x:Class="ZeitauswertungV2.UI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ZeitauswertungV2"
-        xmlns:view="clr-namespace:ZeitauswertungV2.View"
+        xmlns:local="clr-namespace:ZeitauswertungV2.UI"
+        xmlns:view="clr-namespace:ZeitauswertungV2.UI.View"
         mc:Ignorable="d"
         Title="ZeitauswertungV2" Height="1139" Width="1878.5" FontSize="20" WindowState="Maximized">
     <Grid>

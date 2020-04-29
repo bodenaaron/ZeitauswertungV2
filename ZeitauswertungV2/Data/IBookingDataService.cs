@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZeitauswertungV2.Model;
 
-namespace ZeitauswertungV2.Data
+namespace ZeitauswertungV2.UI.Data
 {
     public interface IBookingDataService
     {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZeitauswertungV2.DataAccess;
 using ZeitauswertungV2.Model;
 
-namespace ZeitauswertungV2.Data
+namespace ZeitauswertungV2.UI.Data
 {
     class BookingDataService : IBookingDataService
 

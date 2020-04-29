@@ -1,27 +1,23 @@
-﻿using Prism.Events;
+﻿using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Data;
-using ZeitauswertungV2.Data;
-using ZeitauswertungV2.Event;
+using System.Windows.Input;
 using ZeitauswertungV2.Model;
-using ZeitauswertungV2.UI.ViewModel;
-using ZeitauswertungV2.Utility;
+using ZeitauswertungV2.UI.Data;
+using ZeitauswertungV2.UI.Event;
+using ZeitauswertungV2.UI.Utility;
 
-namespace ZeitauswertungV2.ViewModel
+namespace ZeitauswertungV2.UI.ViewModel
 {
-    class DataTableViewModel : ViewModelBase, IDataTableViewModel
+    public class DataTableViewModel : ViewModelBase, IDataTableViewModel
     {
 
         private IBookingDataService bookingDataService;
         private IEventAggregator eventAggregator;
-
+        public ICommand ToggleView { get; }
         public ObservableCollection<BookingDay> BookingsByDay { get; }
         public ObservableCollection<Booking> Bookings { get; }
 
@@ -29,7 +25,18 @@ namespace ZeitauswertungV2.ViewModel
 
         #region Überwachte Variablen
 
-        public bool GroupByDay { get; set;}
+        private string groupByDay;
+        public string GroupByDay {
+            get
+            {
+                return groupByDay;
+            }
+            set
+            {
+                groupByDay = value;
+                OnPropertyChanged();
+            }
+        }
         public bool GroupByBooking { get; set; }
         public string DisplayAllHours {
             get
@@ -161,7 +168,6 @@ namespace ZeitauswertungV2.ViewModel
 
         #endregion
 
-
         public DataTableViewModel(IBookingDataService bookingDataService, IEventAggregator eventAggregator)
         {
             this.bookingDataService = bookingDataService;
@@ -170,8 +176,23 @@ namespace ZeitauswertungV2.ViewModel
             this.eventAggregator.GetEvent<InputChangedEvent>().Subscribe(OnInputChanged);
             Bookings = new ObservableCollection<Booking>();
             BookingsByDay = new ObservableCollection<BookingDay>();
-            
-            
+            ToggleView= new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
+            GroupByDay = "Hidden";
+
+        }
+
+        private bool OnSearchCanExecute()
+        {
+            return true;
+        }
+
+        private void OnSearchExecute()
+        {
+            if (GroupByDay=="Visible")
+            {
+                GroupByDay = "Hidden";
+            }
+            else { GroupByDay = "Visible"; }
         }
 
         private async void OnEmployeeChanged(string employeeId)
@@ -261,12 +282,12 @@ namespace ZeitauswertungV2.ViewModel
         public async Task LoadBookingsByDayAsync(string employeeId, DateTime from, DateTime till)
         {
             DateTime date = from;
-
+            BookingsByDay.Clear();
 
             while (date<=till)
             {            
                 var bookings = await bookingDataService.GetByEmployeeIdAndDateAsync(employeeId, date, date);
-                BookingsByDay.Clear();
+                
                 BookingDay bd = new BookingDay();
                 foreach (var item in bookings)
                 {               

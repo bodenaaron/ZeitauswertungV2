@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZeitauswertungV2.UI.ViewModel;
 
-namespace ZeitauswertungV2
+namespace ZeitauswertungV2.UI
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
