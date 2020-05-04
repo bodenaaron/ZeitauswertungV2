@@ -38,6 +38,42 @@ namespace ZeitauswertungV2.UI.ViewModel
             }
         }
         public bool GroupByBooking { get; set; }
+
+        private TimeSpan bookedDiff;
+        public TimeSpan BookedDiff
+        {
+            get
+            {
+                return bookedDiff;
+            }
+            private set
+            {
+                bookedDiff = value;
+                if (value.TotalHours<0)
+                {
+                    DisplayDiff = string.Format("{0:0.}:{1}", Math.Ceiling(value.TotalHours), value.Minutes);
+                }
+                else 
+                { 
+                    DisplayDiff = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+                }
+            }
+        }
+        public string DisplayDiff
+        {
+            get
+            {
+                return displayDiff;
+            }
+            set
+            {
+                displayDiff = value;
+                OnPropertyChanged();
+            }
+        }
+        private string displayDiff;
+
+
         public string DisplayAllHours {
             get
             {
@@ -50,6 +86,32 @@ namespace ZeitauswertungV2.UI.ViewModel
             }
         }
         private string displayAllHours;
+        private TimeSpan timeAccount;
+        public TimeSpan TimeAccount
+        {
+            get
+            {
+                return timeAccount;
+            }
+            private set
+            {
+                timeAccount = value;
+                DisplayTimeAccount = string.Format("{0:0.}:{1}", Math.Floor(value.TotalHours), value.Minutes);
+            }
+        }
+        public string DisplayTimeAccount
+        {
+            get
+            {
+                return displayTimeAccount;
+            }
+            set
+            {
+                displayTimeAccount = value;
+                OnPropertyChanged();
+            }
+        }
+        private string displayTimeAccount;
         public string DisplayWorkedHours {
             get
             {
@@ -178,7 +240,6 @@ namespace ZeitauswertungV2.UI.ViewModel
             BookingsByDay = new ObservableCollection<BookingDay>();
             ToggleView= new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
             GroupByDay = "Hidden";
-
         }
 
         private bool OnSearchCanExecute()
@@ -217,6 +278,7 @@ namespace ZeitauswertungV2.UI.ViewModel
         public void OnInputChanged(InputChangedEventArgs dateChangedEventArgs)
         {
             LoadAsyncBookingsBeetweenDate(dateChangedEventArgs.EmployeeId,dateChangedEventArgs.From,dateChangedEventArgs.Till);
+            LoadAsyncBookingsForYear(dateChangedEventArgs.EmployeeId, new DateTime(dateChangedEventArgs.From.Year,01,01), dateChangedEventArgs.Till);
             LoadBookingsByDay(dateChangedEventArgs.EmployeeId, dateChangedEventArgs.From, dateChangedEventArgs.Till);
             calculateHours();
             calculateTargetHours(dateChangedEventArgs);
@@ -230,15 +292,13 @@ namespace ZeitauswertungV2.UI.ViewModel
             TimeSpan duration = dateChangedEventArgs.Till - dateChangedEventArgs.From;
 
             foreach (var day in EachDay(dateChangedEventArgs.From, dateChangedEventArgs.Till))
-            {
-                if (dc.IsWorkday(day))
-                {
-                    TargetHours = TargetHours.Add(TimeSpan.FromHours(8));
-                }
-                
+            {                
+               TargetHours = TargetHours.Add(TimeSpan.FromHours(dc.getHoursofDay(day)));                                
             }
-            
+
+            BookedDiff = AllHours - TargetHours;
         }
+        
 
         private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
@@ -286,6 +346,50 @@ namespace ZeitauswertungV2.UI.ViewModel
                     Bookings.Add(item);
                 }
             }
+        }
+
+        public void LoadAsyncBookingsForYear(string employeeId, DateTime from, DateTime till)
+        {
+            var bookings = bookingDataService.GetByEmployeeIdAndDate(employeeId, from, till);
+            
+            DateChecker dc = new DateChecker();
+            TargetHours = TimeSpan.Zero;
+            TimeSpan duration = till - from;
+
+            TimeSpan mandatory = new TimeSpan();
+            foreach (var day in EachDay(from, till))
+            {               
+                mandatory = mandatory.Add(TimeSpan.FromHours(dc.getHoursofDay(day)));               
+            }
+            TimeSpan bookedHours = CalculateHoursFromBeginningOfYear(bookings);
+
+            TimeAccount = bookedHours - mandatory;
+
+        }
+
+        public TimeSpan CalculateHoursFromBeginningOfYear(List<Booking> bookings)
+        {
+            TimeSpan mandatoryHours = new TimeSpan();
+            foreach (var booking in bookings) 
+                {
+                    if (booking.Deleted != true)
+                    {
+
+                        switch (booking.BookingTyp)
+                        {
+                            case "Urlaub"://todo: Den Eigentlichen Zeittypen benutzen                            
+                                mandatoryHours = mandatoryHours + TimeSpan.Parse("8:00");
+                                break;
+                            case "Krank":
+                                mandatoryHours = mandatoryHours + TimeSpan.Parse("8:00");
+                                break;
+                            default:
+                                mandatoryHours = mandatoryHours + booking.Duration;
+                                break;
+                        }
+                    }
+                }
+            return mandatoryHours;
         }
 
         public void LoadBookingsByDay(string employeeId, DateTime from, DateTime till)

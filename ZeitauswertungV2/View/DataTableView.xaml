@@ -31,9 +31,15 @@
         
         <Label Grid.Column="0" Grid.Row="0" Content="Soll Arbeitsstunden:" HorizontalAlignment="Left" />
         <TextBox IsReadOnly="True"  Text="{Binding DisplayTargetHours,Mode=OneWay}" Grid.Column="1" Grid.Row="0" Name="tb_MandatoryHoursInRange" HorizontalAlignment="Left" MinWidth="50" Width="Auto" />
+        
+        <Label Grid.Column="2" Grid.Row="0" Content="Arbeitszeitkonto: " HorizontalAlignment="Left" />
+        <TextBox IsReadOnly="True"  Grid.Column="3"  Grid.Row="0" Name="tb_TimeAccount" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayTimeAccount, Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
 
+        <Label Grid.Column="4" Grid.Row="0" Content="Gerechnet ab 1.01." HorizontalAlignment="Left" />
+        
         <Label Grid.Column="0" Grid.Row="1" Content="Gesamtstunden: " HorizontalAlignment="Left" />
         <TextBox IsReadOnly="True"  Text="{Binding DisplayAllHours,Mode=OneWay}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinWidth="50" Width="Auto"/>
+        <TextBox IsReadOnly="True"  Text="{Binding DisplayDiff,Mode=OneWay}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Margin="70 0 0 0"/>
 
         <Label Grid.Column="2" Grid.Row="1" Content="Gearbeitete Stunden: " HorizontalAlignment="Left"/>
         <TextBox IsReadOnly="True"  Grid.Column="3" Grid.Row="1" Name="tb_WorkedHoures" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplayWorkedHours,StringFormat=\{0:hh\\:mm\},Mode=OneWay}"/>
@@ -44,6 +50,7 @@
         <Label Grid.Column="6" Grid.Row="1" Content="Krank gebucht: " HorizontalAlignment="Left" />
         <TextBox IsReadOnly="True"  Grid.Column="7"  Grid.Row="1" Name="tb_SickHours" HorizontalAlignment="Left" MinWidth="50" Width="Auto" Text="{Binding DisplaySickHours, Mode=OneWay,StringFormat=\{0:hh\\:mm\}}"/>
 
+        
         <!--<Button Content="Ansicht Umschalten" Command="{Binding ToggleView}"/>-->
         <Border Grid.Row="2" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="0 25 10 0">
             <Grid>
