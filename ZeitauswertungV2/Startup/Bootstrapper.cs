@@ -21,6 +21,7 @@ namespace ZeitauswertungV2.UI.Startup
             builder.RegisterType<DataTableViewModel>().As<IDataTableViewModel>();
             builder.RegisterType<EmployeeDataService>().As<IEmployeeDataService>();
             builder.RegisterType<BookingDataService>().As<IBookingDataService>();
+            builder.RegisterType<TimeAccountAdjustmentDataService>().As<ITimeAccountAdjustmentDataService>();
 
             return builder.Build();
 

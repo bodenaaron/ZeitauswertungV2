@@ -16,8 +16,11 @@ namespace ZeitauswertungV2.UI.ViewModel
     {
 
         private IBookingDataService bookingDataService;
+        private ITimeAccountAdjustmentDataService timeAccountDataService;
+
         private IEventAggregator eventAggregator;
         public ICommand ToggleView { get; }
+        public ICommand AdjustTimeAccount { get; }
         public ObservableCollection<BookingDay> BookingsByDay { get; }
         public ObservableCollection<Booking> Bookings { get; }
 
@@ -224,22 +227,57 @@ namespace ZeitauswertungV2.UI.ViewModel
             }
         }
 
+        private int timeAdjustmentHours;
+        private int timeAdjustmentMinutes;
+
+        public int TimeAdjustmentMinutes
+        {
+            get { return timeAdjustmentMinutes; }
+            set
+            {
+                timeAdjustmentMinutes = value;
+                OnPropertyChanged();
+            }
+        }
+        public int TimeAdjustmentHours
+        {
+            get { return timeAdjustmentHours; }
+            set
+            {
+                timeAdjustmentHours = value;
+                OnPropertyChanged();
+            }
+        }
         private string displaySickHours;
         private string displayTargetHours;
         private TimeSpan workedHours;
 
         #endregion
 
-        public DataTableViewModel(IBookingDataService bookingDataService, IEventAggregator eventAggregator)
+        public DataTableViewModel(IBookingDataService bookingDataService, IEventAggregator eventAggregator, ITimeAccountAdjustmentDataService timeAccountAdjustmentDataService)
         {
             this.bookingDataService = bookingDataService;
+            this.timeAccountDataService = timeAccountAdjustmentDataService;
             this.eventAggregator = eventAggregator;
             //this.eventAggregator.GetEvent<EmployeeChangedEvent>().Subscribe(OnEmployeeChanged);
             this.eventAggregator.GetEvent<InputChangedEvent>().Subscribe(OnInputChanged);
             Bookings = new ObservableCollection<Booking>();
             BookingsByDay = new ObservableCollection<BookingDay>();
             ToggleView= new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
+            AdjustTimeAccount = new DelegateCommand(OnAdjustExecute, OnAdjustCanExecute);
             GroupByDay = "Hidden";
+        }
+
+        private bool OnAdjustCanExecute()
+        {
+            return true;
+        }
+
+        private void OnAdjustExecute()
+        {
+            //eventAggregator.GetEvent<TimeAccountAdjustEvent>().Publish(new TimeAccountAdjustment { Employee = selectedEmployee, DateOfAdjustment=DateTime.Now, TimeAccountAdjustedMinutes = TimeAdjustmentMinutes, TimeAccountAdjustedHours = TimeAdjustmentHours});
+            timeAccountDataService.SetTimeAccountAdjustment(new TimeAccountAdjustment { Employee = selectedEmployee, DateOfAdjustment = DateTime.Now, TimeAccountAdjustedMinutes = TimeAdjustmentMinutes, TimeAccountAdjustedHours = TimeAdjustmentHours });
+            
         }
 
         private bool OnSearchCanExecute()
@@ -255,6 +293,8 @@ namespace ZeitauswertungV2.UI.ViewModel
             }
             else { GroupByDay = "Visible"; }
         }
+
+        private string selectedEmployee;
 
         private async void OnEmployeeChanged(string employeeId)
         {               
@@ -282,7 +322,7 @@ namespace ZeitauswertungV2.UI.ViewModel
             LoadBookingsByDay(dateChangedEventArgs.EmployeeId, dateChangedEventArgs.From, dateChangedEventArgs.Till);
             calculateHours();
             calculateTargetHours(dateChangedEventArgs);
-
+            selectedEmployee = dateChangedEventArgs.EmployeeId;
         }
 
         private void calculateTargetHours(InputChangedEventArgs dateChangedEventArgs)

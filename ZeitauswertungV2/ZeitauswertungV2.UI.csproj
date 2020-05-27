@@ -37,6 +37,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Joachim|AnyCPU'">
+    <OutputPath>..\..\..\..\..\..\..\Datenbank\Datenbank_System_Dateien\Joachim\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Holger Zeitauswertung|AnyCPU'">
+    <OutputPath>..\..\..\..\..\..\..\Datenbank\Datenbank_System_Dateien\Holger\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Kornelia Zeitauswertung|AnyCPU'">
+    <OutputPath>..\..\..\..\..\..\..\Datenbank\Datenbank_System_Dateien\Kornelia\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sven Zeitauswertung|AnyCPU'">
+    <OutputPath>..\..\..\..\..\..\..\Datenbank\Datenbank_System_Dateien\Sven\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Riko Zeitauswertung|AnyCPU'">
+    <OutputPath>..\..\..\..\..\..\..\Datenbank\Datenbank_System_Dateien\Riko\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>
@@ -87,10 +104,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\ITimeAccountAdjustmentDataService.cs" />
+    <Compile Include="Data\TimeAccountAdjustmentDataService.cs" />
     <Compile Include="Data\BookingDataService.cs" />
     <Compile Include="Data\EmployeeDataService.cs" />
     <Compile Include="Data\IBookingDataService.cs" />
     <Compile Include="Data\IEmployeeDataService.cs" />
+    <Compile Include="Event\TimeAccountAdjustEvent.cs" />
     <Compile Include="Event\InputChangedEvent.cs" />
     <Compile Include="Event\InputChangedEventArgs.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />

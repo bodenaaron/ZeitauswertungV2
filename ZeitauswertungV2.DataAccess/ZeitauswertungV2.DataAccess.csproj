@@ -33,6 +33,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Joachim|AnyCPU'">
+    <OutputPath>bin\Joachim\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Holger Zeitauswertung|AnyCPU'">
+    <OutputPath>bin\Holger Zeitauswertung\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Kornelia Zeitauswertung|AnyCPU'">
+    <OutputPath>bin\Kornelia Zeitauswertung\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sven Zeitauswertung|AnyCPU'">
+    <OutputPath>bin\Sven Zeitauswertung\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Riko Zeitauswertung|AnyCPU'">
+    <OutputPath>bin\Riko Zeitauswertung\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=5.1.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.5.1.2\lib\net461\Autofac.dll</HintPath>

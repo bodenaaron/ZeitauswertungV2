@@ -16,6 +16,7 @@ namespace ZeitauswertungV2.DataAccess
         public DbSet<Employee> Employees{ get; set; }
 
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<TimeAccountAdjustment> TimeAccounts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
